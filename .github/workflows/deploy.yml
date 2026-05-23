@@ -6,13 +6,13 @@ on:
       - main
 
 jobs:
-  terraform:
-    name: Terraform Deployment
+  deploy:
+    name: Terraform and S3 Deployment
     runs-on: ubuntu-latest
 
     steps:
 
-      # Step 1 - Download repository code
+      # Step 1 - Checkout repository code
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -28,22 +28,22 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      # Step 4 - Initialize Terraform
+      # Step 4 - Terraform Init
       - name: Terraform Init
         working-directory: terraform
         run: terraform init
 
-      # Step 5 - Validate Terraform
+      # Step 5 - Terraform Validate
       - name: Terraform Validate
         working-directory: terraform
         run: terraform validate
 
-      # Step 6 - Preview Infrastructure Changes
+      # Step 6 - Terraform Plan
       - name: Terraform Plan
         working-directory: terraform
         run: terraform plan
 
-      # Step 7 - Deploy Infrastructure
+      # Step 7 - Terraform Apply
       - name: Terraform Apply
         working-directory: terraform
         run: terraform apply -auto-approve
@@ -51,7 +51,3 @@ jobs:
       # Step 8 - Upload Website Files to S3
       - name: Upload Website Files
         run: aws s3 sync website/ s3://veda-devops-static-site-2026
-5m
-
-Add an Emoji, Sticker, or GIF
-
