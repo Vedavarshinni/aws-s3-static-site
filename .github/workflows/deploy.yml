@@ -38,6 +38,12 @@ jobs:
         working-directory: terraform
         run: terraform validate
 
+      # Import Existing Bucket If Already Present
+      - name: Import Existing Bucket
+        working-directory: terraform
+        run: |
+          terraform import aws_s3_bucket.website_bucket veda-devops-static-site-2026 || true
+
       # Step 6 - Terraform Plan
       - name: Terraform Plan
         working-directory: terraform
